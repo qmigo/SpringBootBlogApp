@@ -1,6 +1,6 @@
 # Java Blog App
 
-The Java Blog App is a web application for managing and publishing blog posts. It is built using Java and [Spring Boot](https://spring.io/projects/spring-boot) for the backend, [Spring MVC](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html) for web functionality, [Thymeleaf](https://www.thymeleaf.org/) for server-side templating, and [Hibernate](https://hibernate.org/) for data persistence.
+The Java Blog App is a web application for managing and publishing blog posts. It is built using Java and [Spring Boot](https://spring.io/projects/spring-boot) for the backend, [Spring MVC](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html) for web functionality, and [Hibernate](https://hibernate.org/) for data persistence.
 
 ## Features
 
@@ -22,4 +22,4 @@ Make sure you have the following installed before running the application:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/java-blog-app.git
+   git clone https://github.com/qmigo/spring-boot-blog-app.git
