@@ -1,5 +1,7 @@
 package com.ankur.bloggingtut.controllers;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -13,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ankur.bloggingtut.payloads.CustomApiResponse;
 import com.ankur.bloggingtut.payloads.UserDto;
 import com.ankur.bloggingtut.services.impl.UserServiceImpl;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
@@ -41,21 +46,21 @@ public class UserResource {
 
 
 	@PostMapping("/")
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto user_details) {
+	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user_details) {
 		UserDto user = service.createUser(user_details);
 		return new ResponseEntity<UserDto> (user, HttpStatus.CREATED);
 		
 	}
 	
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user_details, @PathVariable Integer userId) {
+	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto user_details, @PathVariable Integer userId) {
 		UserDto user = service.updateUser(user_details, userId);
 		return new ResponseEntity<UserDto> (user, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<String> deleteUser(@PathVariable Integer userId) {
+	public ResponseEntity<CustomApiResponse> deleteUser(@PathVariable Integer userId) {
 		service.deleteUser(userId);
-		return new ResponseEntity<String> ("Resource Deleted", HttpStatus.OK);		
+		return new ResponseEntity<CustomApiResponse> (new CustomApiResponse(LocalDateTime.now(), Arrays.asList("Resource deleted"), true), HttpStatus.OK);		
 	}
 }

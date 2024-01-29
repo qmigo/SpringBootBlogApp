@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.ankur.bloggingtut.entities.User;
@@ -16,11 +17,12 @@ import com.ankur.bloggingtut.services.UserService;
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userDao;
-	
+	private ModelMapper modelMapper;
 
-	public UserServiceImpl(UserRepository userDao) {
+	public UserServiceImpl(UserRepository userDao, ModelMapper modelMapper) {
 		super();
 		this.userDao = userDao;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
@@ -35,18 +37,6 @@ public class UserServiceImpl implements UserService {
 					.findById(userId)
 					.orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
 		
-//		if(user_updates.getName()!=null) {
-//			user.setName(user_updates.getName());
-//		}
-//		if(user_updates.getBio()!=null) {
-//			user.setBio(user_updates.getBio());
-//		}
-//		if(user_updates.getEmail()!=null) {
-//			user.setEmail(user_updates.getEmail());
-//		}
-//		if(user_updates.getPassword()!=null) {
-//			user.setPassword(user_updates.getPassword());
-//		}
 		
 		Optional.ofNullable(user_updates.getName()).ifPresent(user::setName);
 		
@@ -87,24 +77,13 @@ public class UserServiceImpl implements UserService {
 	
 	private User dtoToUser(UserDto userDto) {
 		
-		User user = new User();
-		user.setId(userDto.getId());
-		user.setName(userDto.getName());
-		user.setEmail(userDto.getEmail());
-		user.setPassword(userDto.getPassword());
-		user.setBio(userDto.getBio());		
+		User user = modelMapper.map(userDto, User.class);
 		return user;
 	}
 	
 	private UserDto userToDto(User user) {
 		
-		UserDto userDto = new UserDto();
-		userDto.setId(user.getId());
-		userDto.setName(user.getName());
-		userDto.setEmail(user.getEmail());
-		userDto.setPassword(user.getPassword());
-		userDto.setBio(user.getBio());
-		
+		UserDto userDto = modelMapper.map(user, UserDto.class);
 		return userDto;
 	}
 	
